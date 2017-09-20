@@ -20,29 +20,7 @@ namespace Blogging.Repository
             return db.Posts.Where(p=> p.UserId == userId);
         }
 
-        public IQueryable GetAllByCategoryId(int categoryId)
-        {
-            var data = db.Posts.Where(p => p.CategoryId == categoryId)
-                .Select( x => new
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    CategoryId = x.CategoryId,
-
-                    UserName = db.Users.Where(y => y.Id == x.UserId)
-                    .Select(y => y.UserName)
-                    .FirstOrDefault(),
-                    CategoryName = db.Categories.Where(c => c.Id == x.CategoryId)
-                                    .Select(y => y.Name)
-                                    .FirstOrDefault(),
-                    TagName = x.Tags.Select(m => new { Id = m.Id, Name = m.Name }).ToList(),
-                    Tags = x.Tags.Select(m => new { Id = m.Id, Name = m.Name }).ToList(),
-                    PostedOn = x.PostedOn,
-                    Content = x.Content,
-                });
-
-            return data;
-        }
+      
 
         public IQueryable GetAllByTagId(int tagId)
         {
@@ -97,8 +75,30 @@ namespace Blogging.Repository
                  });
             return data;
         }
+    public IQueryable GetAllByCategoryId(int categoryId)
+    {
+      var data = db.Posts.Where(p => p.CategoryId == categoryId)
+          .Select(x => new
+          {
+            Id = x.Id,
+            Title = x.Title,
+            CategoryId = x.CategoryId,
 
-        public IQueryable Get(int Id)
+            UserName = db.Users.Where(y => y.Id == x.UserId)
+             .Select(y => y.UserName)
+             .FirstOrDefault(),
+            CategoryName = db.Categories.Where(c => c.Id == x.CategoryId)
+                             .Select(y => y.Name)
+                             .FirstOrDefault(),
+            TagName = x.Tags.Select(m => new { Id = m.Id, Name = m.Name }).ToList(),
+            Tags = x.Tags.Select(m => new { Id = m.Id, Name = m.Name }).ToList(),
+            PostedOn = x.PostedOn,
+            Content = x.Content,
+          });
+
+      return data;
+    }
+    public IQueryable Get(int Id)
         {
             var data = db.Posts.Where(x => x.Id==Id)
                 .Select(x => new
