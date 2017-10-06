@@ -27,6 +27,8 @@ namespace Blogging.Repository
             var data = db.Posts.Where(x => x.Tags.Select(m => m.Id).Contains(tagId))
                 .Select(x => new
                 {
+
+
                     Id = x.Id,
                     Title = x.Title,
                     CategoryId = x.CategoryId,
