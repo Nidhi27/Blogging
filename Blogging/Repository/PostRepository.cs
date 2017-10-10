@@ -35,6 +35,7 @@ namespace Blogging.Repository
 
                     UserName = db.Users.Where(y => y.Id == x.UserId)
                    .Select(y => y.UserName)
+                  
                    .FirstOrDefault(),
                     CategoryName = db.Categories.Where(c => c.Id == x.CategoryId)
                                    .Select(y => y.Name)
